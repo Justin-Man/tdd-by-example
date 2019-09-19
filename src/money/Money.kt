@@ -1,6 +1,6 @@
 package money
 
-open class Money(protected val amount: Int, protected open val currency: String) {
+open class Money(protected val amount: Int, protected open val currency: String) : Expression {
 
     fun times(multiplier: Int) = Money(amount * multiplier, currency)
 
@@ -11,12 +11,12 @@ open class Money(protected val amount: Int, protected open val currency: String)
         return amount == money.amount && currency() == money.currency()
     }
 
-    override fun toString(): String {
-        return "$amount $currency"
-    }
+    override fun toString() = "$amount $currency"
+
+    fun plus(addend: Money) : Expression = Money(amount + addend.amount, currency)
 
     companion object {
-        fun dollar(amount: Int) = Dollar(amount, "USD") as Money
-        fun franc(amount: Int) = Franc(amount, "CHF") as Money
+        fun dollar(amount: Int) = Money(amount, "USD")
+        fun franc(amount: Int) = Money(amount, "CHF")
     }
 }
