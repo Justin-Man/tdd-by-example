@@ -41,4 +41,29 @@ class MoneyTest {
 
         assertEquals(Money.dollar(10), reduced)
     }
+
+    @Test
+    fun testPlusReturnSum() {
+        val five = Money.dollar(5)
+        val result = five.plus(five)
+        val sum = result as Sum
+
+        assertEquals(five, sum.augend)
+        assertEquals(five, sum.addend)
+    }
+
+    @Test
+    fun testReduceSum() {
+        val sum = Sum(Money.dollar(3), Money.dollar(4))
+        val bank = Bank()
+
+        val result = bank.reduce(sum, "USD")
+
+        assertEquals(Money.dollar(7), result)
+    }
+
+    @Test
+    fun testReduceMoney() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
