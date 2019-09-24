@@ -2,7 +2,9 @@ package money
 
 open class Money(val amount: Int, protected open val currency: String) : Expression {
 
-    fun times(multiplier: Int) = Money(amount * multiplier, currency)
+    override fun plus(addend: Expression): Expression = Sum(this, addend)
+
+    fun times(multiplier: Int): Expression = Money(amount * multiplier, currency)
 
     fun currency() = currency
 
@@ -13,10 +15,9 @@ open class Money(val amount: Int, protected open val currency: String) : Express
 
     override fun toString() = "$amount $currency"
 
-    fun plus(addend: Money) : Expression = Sum(this, addend)
-
     override fun reduce(bank: Bank, to: String) : Money {
-        val rate = bank.rate(currency, to) // ask the bank for the right rate
+        // ask the bank for the right rate
+        val rate = bank.rate(currency, to)
 
         return Money(amount / rate, to)
     }
