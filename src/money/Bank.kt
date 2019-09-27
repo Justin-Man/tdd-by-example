@@ -2,7 +2,6 @@ package money
 
 import java.util.*
 
-
 class Bank {
 
     private val rates = Hashtable<Pair, Int>()
@@ -12,9 +11,9 @@ class Bank {
     }
 
     fun rate(from: String, to: String): Int {
-
-        if (from == to) return 1
-        else return rates[Pair(from, to)]?.let { it }
+        return if (from == to) 1
+        else rates[Pair(from, to)]
+            ?.let { it }
             ?: 1 // if the rate does not exist
     }
 
